@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script data-gamut-dashboard-fallback="true">
+(function () {
+  if (window.__GAMUT_DASHBOARD__) return;
+
+  var marker = "/api/agents/";
+  var pathname = window.location.pathname || "/";
+  var markerAt = pathname.indexOf(marker);
+  var basePath = "/";
+
+  if (markerAt >= 0) {
+    var segments = pathname.slice(markerAt + marker.length).split("/");
+    if (segments.length >= 3 && segments[0] && segments[1] === "artifacts" && segments[2]) {
+      basePath = pathname.slice(0, markerAt) + marker + segments[0] + "/artifacts/" + segments[2] + "/";
+    }
+  }
+
+  function dashboardUrl(path) {
+    var value = path == null ? "" : String(path);
+    if (!value || value === ".") return basePath;
+    if (value.charAt(0) === "?" || value.charAt(0) === "#") return basePath + value;
+    value = value.replace(/^\.\//, "").replace(/^\/+/, "");
+
+    var origin = "http://gamut.invalid";
+    var resolved = new URL(value, origin + basePath);
+    if (resolved.origin !== origin || resolved.pathname.indexOf(basePath) !== 0) {
+      throw new TypeError("Dashboard URLs cannot escape the dashboard mount");
+    }
+    return resolved.pathname + resolved.search + resolved.hash;
+  }
+
+  window.__GAMUT_DASHBOARD__ = Object.freeze({
+    basePath: basePath,
+    routerBasePath: basePath === "/" ? "/" : basePath.slice(0, -1),
+    slug: "",
+    url: dashboardUrl
+  });
+})();
+</script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unpour Club — a sharper life beyond the default drink</title>
+    <meta name="description" content="A paid weekly series for people quitting drinking, drinking less, or trying one different night. $12/month. No pep talk. No purity tests." />
+    <meta name="theme-color" content="#120e0c" />
+    <link rel="canonical" href="https://dopelesshopeful-hub.github.io/unpour-club/" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Unpour Club" />
+    <meta property="og:title" content="Unpour Club — a sharper life beyond the default drink" />
+    <meta property="og:description" content="Paid weekly series for people changing their drinking. $12/month or $99/year. Not treatment. Not AA." />
+    <meta property="og:url" content="https://dopelesshopeful-hub.github.io/unpour-club/" />
+    <meta property="og:image" content="https://dopelesshopeful-hub.github.io/unpour-club/og.png" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="576" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Unpour Club — a sharper life beyond the default drink" />
+    <meta name="twitter:description" content="Paid weekly series for people changing their drinking. $12/month or $99/year." />
+    <meta name="twitter:image" content="https://dopelesshopeful-hub.github.io/unpour-club/og.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="./assets/index-2PoSTKWP.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-FVc3Riyl.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
